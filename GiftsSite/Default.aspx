@@ -3,84 +3,168 @@
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server" >
 
        <script type="text/javascript">
-            //alert("Hello, Default !");
+
+
            $(document).ready(function () {
 
                LoadData();
               
            });
 
+
            function LoadData()
            {
-               var source =
-               {
-                   localdata: generatedata(500),
-                   datafields:
-                       [
-                           { name: 'Id', type: 'number' },
-                           { name: 'ProductName', type: 'string' },
-                           { name: 'Description', type: 'string' },
-                           { name: 'SaleDate', type: 'date' }
+                   debugger;
+                   $("#grid").jqGrid
+                       ({
+                           url: "http://localhost:44317/JQGridHandler.ashx",
+                           direction: "rtl",
+                           datatype: 'json',
+                           mtype: 'Get',
+                           //mtype: 'POST',
+                           serializeGridData: function (postData) {
+                               debugger;
+                               return JSON.stringify(postData);
+                           },
 
-                       ],
-                   datatype: "array"
-               };
+                           loadonce: false,
 
-               var dataAdapter = new $.jqx.dataAdapter(source);
-               var columns = [
-                   { text: 'קוד מוצר', dataField: 'Id', width: 130 },
-                   { text: 'שם מוצר', dataField: 'ProductName', width: 130 },
-                   { text: 'תיאור מוצר', dataField: 'Description', width: 180 },
-                   { text: 'תאריך תחילת מחירה', dataField: 'SaleDate', width: 80, cellsalign: 'right' }
+                           //table header name   
+                           colNames: ['קוד מוצר', 'שם מוצר', 'תיאור מוצר', 'תאריך תחילת מחירה'],
+                           
+                           //colModel takes the data from controller and binds to grid   
+                           colModel: [
+                               {
+                                   key: true,
+                                   hidden: false,
+                                   name: 'Id',
+                                   index: 'Id',
+                                   editable: false
+                               },
+                               {
+                                   key: false,
+                                   name: 'ProductName',
+                                   index: 'ProductName',
+                                   editable: true
+                               },
+                               {
+                                   key: false,
+                                   name: 'Description',
+                                   index: 'Description',
+                                   editable: true
+                               },
+                               {
+                                   key: false,
+                                   name: 'SaleDate',
+                                   index: 'SaleDate',
+                                   sorttype: "date",
+                                   edittype: "date",
+                                   formatter: "date",
+                                   formatoptions: {
+                                       "srcformat": "u1000",
+                                       "newformat": "m/d/Y H:i:s"
+                                   },
+                                   editable: true
+                               }],
 
-               ];
-
-               // create data grid.
-               $("#grid").jqxGrid(
-                   {
-                       width: getWidth('Grid'),
-                       height: 300,
-                       source: dataAdapter,
-                       columns: columns
-                   });
-
-               // init buttons.
-               $("#refresh").jqxButton({ theme: theme });
-               $("#clear").jqxButton({ theme: theme });
-
-               $("#refresh").click(function () {
-                   source.localdata = generatedata(500);
-                   // passing "cells" to the 'updatebounddata' method will refresh only the cells values when the new rows count is equal to the previous rows count.
-                   $("#grid").jqxGrid('updatebounddata', 'cells');
-               });
-
-               $("#clear").click(function () {
-                   $("#grid").jqxGrid('clear');
-               });
+                           rowNum: 10,
+                           rowList: [10, 20, 30, 40],
+                           pager: '#pager',
+                           height: '100%',
+                           viewrecords: true,
+                           caption: 'רשימת מוצרים',
+                           emptyrecords: 'No records to display',
+                           jsonReader:
+                           {
+                               root: "rows",
+                               page: "page",
+                               total: "total",
+                               records: "records",
+                               repeatitems: false,
+                               Id: "0"
+                           },
+                           autowidth: true,
+                           multiselect: false
+                           //pager-you have to choose here what icons should appear at the bottom  
+                           //like edit,create,delete icons  
+                       }).navGrid('#pager',
+                           {
+                               edit: true,
+                               add: true,
+                               del: true,
+                               search: false,
+                               refresh: true
+                           }, {
+                           // edit options  
+                           zIndex: 100,
+                           url: '/Default/Edit',
+                           closeOnEscape: true,
+                           closeAfterEdit: true,
+                           recreateForm: true,
+                           afterComplete: function (response) {
+                               if (response.responseText) {
+                                   alert(response.responseText);
+                               }
+                           }
+                       }
+                         ,  {
+                           // add options  
+                           zIndex: 100,
+                           url: "/Default/Create",
+                           closeOnEscape: true,
+                           closeAfterAdd: true,
+                           afterComplete: function (response) {
+                               if (response.responseText)
+                               {
+                                   alert(response.responseText);
+                               }
+                           }
+                           }
+                           , {
+                           // delete options  
+                           zIndex: 100,
+                             url: "/Default/Delete",
+                           closeOnEscape: true,
+                           closeAfterDelete: true,
+                           recreateForm: true,
+                           msg: "Are you sure you want to delete this task?",
+                           afterComplete: function (response) {
+                               if (response.responseText) {
+                                   alert(response.responseText);
+                               }
+                           }
+                       });
+          
            }
+
        </script>
     <br>
     <br>
     <br>
     <br>
     <br>
-    <br><br>
+    
+    <br>
+  
+    <br>
     
 
    <%-- <body>--%>
+    
     <div class="container">
-    <h1 dir="rtl"> ניהול מוצרים</h1>
-    </div>    
+      <div class="row justify-content-center">
+        <h2 class="text-center">ניהול מוצרים</h2>
+      </div>
+    </div>
+
     <div dir="rtl">
        
-        <div id='jqxWidget'>
-        <div id="grid">
-        </div>
-     <%--   <div style="margin-top: 10px;">
-            <input id="refresh" type="button" value="Refresh Data" />
-            <input id="clear" type="button" value="Clear" />
-        </div>--%>
-                  <div id="eventslog" style="display: none; margin-top: 30px;">
+        <div>  
+            <table id="grid"></table>  
+            <div id="pager"></div>  
+        </div>  
+     
+          <div id="eventslog" style="display: none; margin-top: 30px;">
             <div style="float: left;">
                 Event Log:
                 <div style="border: none;" id="events">
@@ -93,25 +177,7 @@
             </div>
         </div>
     </div>
-   <%-- <div id='jqxWidget' style="font-size: 13px; font-family: Verdana; float: left;">
-        <div id="grid">
-        </div>
-        <div id="eventslog" style="display: none; margin-top: 30px;">
-            <div style="float: left;">
-                Event Log:
-                <div style="border: none;" id="events">
-                </div>
-            </div>
-            <div style="float: left;">
-                Paging Details:
-                <div id="paginginfo">
-                </div>
-            </div>
-        </div>
-    </div>--%>
-
-
-    <%--</body>--%>
-</div>
+   
+<%--</div>--%>
 
 </asp:Content>

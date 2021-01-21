@@ -1,0 +1,48 @@
+   function LoadData()
+           {
+               var source =
+               {
+                   localdata: generatedata(500),
+                   datafields:
+                       [
+                           { name: 'Id', type: 'number' },
+                           { name: 'ProductName', type: 'string' },
+                           { name: 'Description', type: 'string' },
+                           { name: 'SaleDate', type: 'date' }
+
+                       ],
+                   datatype: "array"
+               };
+
+               var dataAdapter = new $.jqx.dataAdapter(source);
+               var columns = [
+                   { text: 'קוד מוצר', dataField: 'Id', width: 130 },
+                   { text: 'שם מוצר', dataField: 'ProductName', width: 130 },
+                   { text: 'תיאור מוצר', dataField: 'Description', width: 180 },
+                   { text: 'תאריך תחילת מחירה', dataField: 'SaleDate', width: 80, cellsalign: 'right' }
+
+               ];
+
+               // create data grid.
+               $("#grid").jqxGrid(
+                   {
+                       width: getWidth('Grid'),
+                       height: 300,
+                       source: dataAdapter,
+                       columns: columns
+                   });
+
+               // init buttons.
+               $("#refresh").jqxButton({ theme: theme });
+               $("#clear").jqxButton({ theme: theme });
+
+               $("#refresh").click(function () {
+                   source.localdata = generatedata(500);
+                   // passing "cells" to the 'updatebounddata' method will refresh only the cells values when the new rows count is equal to the previous rows count.
+                   $("#grid").jqxGrid('updatebounddata', 'cells');
+               });
+
+               $("#clear").click(function () {
+                   $("#grid").jqxGrid('clear');
+               });
+           }
