@@ -26,20 +26,67 @@ namespace GiftsDal
 
         #region Public methods
 
-        public DataSet GetProductsData(int page, int rowsOnPage)
+        public bool InsertProduct(Product product)
         {
-            DataSet ds = new DataSet();
+            int numberOfAffectedRows = 0;
+            bool isSucceess = false;
+
             using (SqlConnection connection = new SqlConnection(_conString))
             {
-                SqlDataAdapter adapter = new SqlDataAdapter();
-                SqlCommand cmd = new SqlCommand("[dbo].[GetProductsForPage]", connection);
-                cmd.Parameters.Add(new SqlParameter("@pageNumber", page));
-                cmd.Parameters.Add(new SqlParameter("@rowsOfPage", rowsOnPage));
+                connection.Open();
+                SqlCommand cmd = new SqlCommand("[dbo].[InsertProduct]", connection);
+                cmd.Parameters.Add(new SqlParameter("@p_productName", product.ProductName));
+                cmd.Parameters.Add(new SqlParameter("@p_description", product.Description));
+                cmd.Parameters.Add(new SqlParameter("@p_saleDate", product.SaleDate));
+                cmd.Parameters.Add(new SqlParameter("@p_imageFileName", product.ImageFileName));
+
                 cmd.CommandType = CommandType.StoredProcedure;
-                adapter.SelectCommand = cmd;
-                adapter.Fill(ds);
-                return ds;
+                numberOfAffectedRows = (int)cmd.ExecuteNonQuery();
             }
+
+            isSucceess = (numberOfAffectedRows > 0) ? true : false;
+            return isSucceess;
+        }
+
+        public bool UpdateProduct(Product product)
+        {
+            int numberOfAffectedRows = 0;
+            bool isSucceess = false;
+
+            using (SqlConnection connection = new SqlConnection(_conString))
+            {
+                connection.Open();
+                SqlCommand cmd = new SqlCommand("[dbo].[UpdateProduct]", connection);
+                cmd.Parameters.Add(new SqlParameter("@p_Id", product.Id));
+                cmd.Parameters.Add(new SqlParameter("@p_productName", product.ProductName));
+                cmd.Parameters.Add(new SqlParameter("@p_description", product.Description));
+                cmd.Parameters.Add(new SqlParameter("@p_saleDate", product.SaleDate));
+                cmd.Parameters.Add(new SqlParameter("@p_imageFileName", product.ImageFileName));
+
+                cmd.CommandType = CommandType.StoredProcedure;
+                numberOfAffectedRows = (int)cmd.ExecuteNonQuery();
+            }
+
+            isSucceess = (numberOfAffectedRows > 0) ? true : false;
+            return isSucceess;
+        }
+
+        public bool RemoveProduct(int productId)
+        {
+            int numberOfAffectedRows = 0;
+            bool isSucceess = false;
+
+            using (SqlConnection connection = new SqlConnection(_conString))
+            {
+                connection.Open();
+                SqlCommand cmd = new SqlCommand("[dbo].[RemoveProduct]", connection);
+                cmd.Parameters.Add(new SqlParameter("@productId", productId));
+                cmd.CommandType = CommandType.StoredProcedure;
+                numberOfAffectedRows = (int)cmd.ExecuteNonQuery();
+            }
+
+            isSucceess = (numberOfAffectedRows > 0) ? true : false;
+            return isSucceess;
         }
 
         public ProductData GetTotalProductsData(int rowsOnPage)

@@ -1,6 +1,13 @@
-﻿.ui-jqgrid .ui-jqgrid-view {
-    font-size: 15px;
+﻿/*.ui-dialog .ui-dialog-title {
+    direction: rtl;
+    float: right;
+    margin: 0.1em 0 0.2em 16px;
 }
+*/
+
+/*.ui-jqgrid .ui-jqgrid-view {
+    font-size: 15px;
+}*/
 /*.ui-jqgrid {
     font-size: 1.8em
 }*/

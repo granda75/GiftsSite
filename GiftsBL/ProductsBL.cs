@@ -22,6 +22,21 @@ namespace GiftsBL
 
         #region Public methods
 
+        public bool InsertProduct(Product product)
+        {
+            return _dal.InsertProduct(product);
+        }
+
+        public bool UpdateProduct(Product product)
+        {
+            return _dal.UpdateProduct(product);
+        }
+
+        public bool RemoveProduct(int productId)
+        {
+            return _dal.RemoveProduct(productId);
+        }
+
         public ProductData GetProductsData(int page, int rowsOnPage)
         {
             ProductData data = _dal.GetTotalProductsData(rowsOnPage);

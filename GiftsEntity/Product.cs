@@ -11,5 +11,7 @@ namespace GiftsEntity
         public string Description { get; set; }
 
         public DateTime SaleDate { get; set; }
+
+        public string ImageFileName { get; set; }
     }
 }

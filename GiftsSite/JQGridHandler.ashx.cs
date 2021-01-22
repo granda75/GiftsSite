@@ -29,11 +29,32 @@ namespace GiftsSite
             GridPageData pageData = JsonConvert.DeserializeObject<GridPageData>(queryString);
 
             string strResponse = string.Empty;
+            var jsonSerializer = new JavaScriptSerializer();
+            ProductsBL bl = new ProductsBL(conString);
+
+            if (strOperation == null)
+            {
+                string parameters = HttpUtility.UrlDecode(context.Request.Params.ToString());
+                string[] parts = parameters.Split('}');
+                if (parts != null && parts.Length > 0)
+                {
+                    string productStr = parts[0] + "}";
+                    if (!string.IsNullOrEmpty(productStr) && productStr.Contains("edit"))
+                    {
+                        strOperation = "edit";
+                        Product product = JsonConvert.DeserializeObject<Product>(productStr);
+                        bl.UpdateProduct(product);
+                    }
+                    else if (productStr.Contains("add"))
+                    {
+                        Product product = JsonConvert.DeserializeObject<Product>(productStr);
+                        bl.InsertProduct(product);
+                    }
+                }
 
             if ( strOperation == null )
             {
                 //oper = null which means its first load.
-                ProductsBL bl = new ProductsBL(conString);
                 ProductData productsData = bl.GetProductsData(pageData.page, pageData.rows);
 
                 var jsonData = new
@@ -44,22 +65,35 @@ namespace GiftsSite
                     rows = productsData.ProductsList
                 };
 
-                var jsonSerializer = new JavaScriptSerializer();
                 context.Response.Write(jsonSerializer.Serialize(jsonData));
             }
-            //else if (strOperation == "del")
-            //{
-            //    var query = Query.EQ("_id", forms.Get("EmpId").ToString());
-            //    collectionEmployee.Remove(query);
-            //    strResponse = "Employee record successfully removed";
-            //    context.Response.Write(strResponse);
-            //}
+            else if (strOperation == "del")
+            {
+                int productId = Int32.Parse(forms.Get("Id"));
+                bool isSuccess = bl.RemoveProduct(productId);
+                strResponse = (isSuccess) ? "המוצר נמחק בהצלחה" : "שגיאה, המוצר לא נמחק";
+                context.Response.Write(strResponse);
+            }
             //else
             //{
-            //    string strOut = string.Empty;
-            //    AddEdit(forms, collectionEmployee, out strOut);
-            //    context.Response.Write(strOut);
-            //}
+            //    //string parameters = HttpUtility.UrlDecode(context.Request.Params.ToString()); 
+            //    //string[] parts = parameters.Split('}');
+            //    if (parts != null && parts.Length > 0)
+            //    {
+            //        string productStr = parts[0] + "}";
+            //        if ( !string.IsNullOrEmpty(productStr) && productStr.Contains("edit"))
+            //        { 
+            //            Product product = JsonConvert.DeserializeObject<Product>(productStr);
+            //            bl.UpdateProduct(product);
+            //        }
+            //        else if (productStr.Contains("add"))
+            //        {
+            //            Product product = JsonConvert.DeserializeObject<Product>(productStr);
+            //            bl.InsertProduct(product);
+            //        }
+            //    }
+                
+            }
         }
 
         public bool IsReusable
