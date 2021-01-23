@@ -8,7 +8,7 @@
            $(document).ready(function ()
            {
                $("#editDialog").css("display", "none");
-               debugger;
+               
                LoadData();
               
                $("#editDialog").dialog({
