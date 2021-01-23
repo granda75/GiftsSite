@@ -76,12 +76,10 @@
             <input type="button" id="btnEdit" class="float-right" style="margin-right:15px;"  value="עריכת מוצר" />
             <input type="button" id="btnAdd" class="float-right" style="margin-right:15px;"  value="הוספת מוצר" />
         </div>  
-
-        
     </div>
    
-    <div id="outer" class="rtl">
-        <div id="editDialog" title="עריכת מוצר" dir="rtl" class="text-right">
+    <div id="outer" class="container text-right">
+        <div id="editDialog"  dir="rtl" class="row text-right">
 
             <table style="width: 100%;" class="text-right" dir="rtl" id="editDialogTable">
                 <tr>

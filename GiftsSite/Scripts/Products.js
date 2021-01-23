@@ -39,6 +39,30 @@ function ClearDialogFields()
     $("#imageFile").val('');
 }
 
+function ValidateInput(productName, description, date)
+{
+    var isValid = true;
+
+    if (!productName)
+    {
+        isValid = false;
+        alert("שם מוצר שדה חובה");
+    }
+
+    if (!description) {
+        isValid = false;
+        alert("תיאור מוצר שדה חובה");
+    }
+
+    if (!date) {
+        isValid = false;
+        alert("תאריך שדה חובה");
+    }
+
+    return isValid;
+
+}
+
 function EditProduct(isInsert) {
     var url = "JQGridHandler.ashx";
 
@@ -53,6 +77,13 @@ function EditProduct(isInsert) {
     var description = $('#txtDescription').val();
     var id = $('#txtId').val();
     var date = $('#txtDate').val();
+
+    var isValid = ValidateInput(productName, description, date);
+    if (!isValid) {
+        return;
+    }
+
+
     var operation = (isInsert == "1") ? 'add' : 'edit';
     if (isInsert == "1")
     {
