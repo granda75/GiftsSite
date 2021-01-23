@@ -8,20 +8,25 @@ function UploadFile()
     // Add the uploaded image content to the form data collection
     if (files.length > 0) {
         data.append("UploadedImage", files[0]);
+
+
+        // Make Ajax request with the contentType = false, and procesData = false
+        var ajaxRequest = $.ajax({
+            type: "POST",
+            url: "JQGridHandler.ashx",
+            contentType: false,
+            processData: false,
+            data: data
+        });
+
+        ajaxRequest.done(function (xhr, textStatus) {
+            // Do other operation
+        });
     }
-
-    // Make Ajax request with the contentType = false, and procesData = false
-    var ajaxRequest = $.ajax({
-        type: "POST",
-        url: "JQGridHandler.ashx",
-        contentType: false,
-        processData: false,
-        data: data
-    });
-
-    ajaxRequest.done(function (xhr, textStatus) {
-        // Do other operation
-    });
+    else
+    {
+        alert("צריך לבחור קובץ !");
+    }
    
 }
 

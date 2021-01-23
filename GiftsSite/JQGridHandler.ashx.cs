@@ -55,21 +55,20 @@ namespace GiftsSite
                         return;
                     }
                 }
-                else
+               
+                //oper = null which means its first load.
+                ProductData productsData = bl.GetProductsData(pageData.page, pageData.rows);
+
+                var jsonData = new
                 {
-                    //oper = null which means its first load.
-                    ProductData productsData = bl.GetProductsData(pageData.page, pageData.rows);
+                    total = productsData.TotalPages,
+                    page = pageData.page,
+                    records = productsData.TotalRows,
+                    rows = productsData.ProductsList
+                };
 
-                    var jsonData = new
-                    {
-                        total = productsData.TotalPages,
-                        page = pageData.page,
-                        records = productsData.TotalRows,
-                        rows = productsData.ProductsList
-                    };
-
-                    context.Response.Write(jsonSerializer.Serialize(jsonData));
-                }
+                context.Response.Write(jsonSerializer.Serialize(jsonData));
+               
             }
             else if (strOperation == "del")
             {
