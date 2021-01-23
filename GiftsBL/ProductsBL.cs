@@ -1,6 +1,7 @@
 ﻿using GiftsDal;
 using GiftsEntity;
 
+
 namespace GiftsBL
 {
     public class ProductsBL
@@ -41,7 +42,9 @@ namespace GiftsBL
         {
             ProductData data = _dal.GetTotalProductsData(rowsOnPage);
             data.ProductsList = _dal.GetProductsList(page, rowsOnPage);
-            // public List<Product> GetProductsList(int page, int rowsOnPage)
+
+            //For sorting
+            //data.ProductsList = data.ProductsList.AsQueryable().OrderBy("ProductName ASC").ToList();
             return data;
         }
 

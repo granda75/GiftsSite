@@ -2,64 +2,36 @@
 
 <!DOCTYPE html>
 
-<html lang="en">
+<html lang="he" dir="rtl">
 <head runat="server">
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
-    <%--<script src="Scripts/jquery-3.4.1.min.js"></script>--%>
-    <%--<script src="Scripts/popper.min.js"></script>--%>
-
     <title><%: Page.Title %> - My ASP.NET Application</title>
-    <%--<link rel="stylesheet" href="/jqwidgets/styles/jqx.base.css" type="text/css" />--%>
-    <%--<link rel="stylesheet" href="/styles/site.css" type="text/css" />--%>
+    
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width, initial-scale=1 maximum-scale=1 minimum-scale=1" />
-    <%--<script type="text/javascript" src="/Scripts/jquery-1.12.4.min.js"></script>--%>
     <link href="Content/Site.css" rel="stylesheet" />
     <link href="/Content/themes/base/jquery-ui.css" rel="stylesheet" />  
     <link href="/Content/jquery.jqGrid/ui.jqgrid.css" rel="stylesheet" />  
     <script src="/Scripts/jquery-3.0.0.min.js"></script>  
-    <%--<script src="/Scripts/jquery-ui-1.10.0.min.js"></script>  --%>
     <script src="Scripts/jquery-ui.js"></script>
     <script src="/Scripts/i18n/grid.locale-en.js"></script>  
     <script src="/Scripts/jquery.jqGrid.min.js"></script>  
     <link href="Content/bootstrap.css" rel="stylesheet" />
     <script src="Scripts/bootstrap.js"></script>
-    
-
-    <%--<script type="text/javascript" src="/jqwidgets/jqxcore.js"></script>
-    <script type="text/javascript" src="/jqwidgets/jqxdata.js"></script> 
-    <script type="text/javascript" src="/jqwidgets/jqxbuttons.js"></script>
-    <script type="text/javascript" src="/jqwidgets/jqxscrollbar.js"></script>
-    <script type="text/javascript" src="/jqwidgets/jqxlistbox.js"></script>
-    <script type="text/javascript" src="/jqwidgets/jqxdropdownlist.js"></script>
-    <script type="text/javascript" src="/jqwidgets/jqxmenu.js"></script>
-    <script type="text/javascript" src="/jqwidgets/jqxgrid.js"></script>
-    <script type="text/javascript" src="/jqwidgets/jqxgrid.pager.js"></script>
-    <script type="text/javascript" src="/jqwidgets/jqxgrid.sort.js"></script>
-    <script type="text/javascript" src="/jqwidgets/jqxgrid.filter.js"></script>
-    <script type="text/javascript" src="/jqwidgets/jqxgrid.columnsresize.js"></script>
-    <script type="text/javascript" src="/jqwidgets/jqxgrid.selection.js"></script> 
-    <script type="text/javascript" src="/jqwidgets/jqxpanel.js"></script>
-    <script type="text/javascript" src="/Scripts/demos.js"></script>
-    <script type="text/javascript" src="/Scripts/generatedata.js"></script>--%>
-
-<%--    <asp:PlaceHolder runat="server">
-        <%: Scripts.Render("~/bundles/modernizr") %>
-    </asp:PlaceHolder>--%>
+    <script src="Scripts/Products.js"></script>
+    <script src="Scripts/moment.js"></script>
 
     <webopt:bundlereference runat="server" path="~/Content/css" />
     <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 
     <style type="text/css">
         
-        
         .auto-style5 {
             height: 337px;
         }
          #cover-success.jumbotron {
-             /*background-size: cover;*/
              background-image: url('/images/Banner.jpg');
              position:absolute;
              width:100%;

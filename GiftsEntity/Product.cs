@@ -13,5 +13,7 @@ namespace GiftsEntity
         public DateTime SaleDate { get; set; }
 
         public string ImageFileName { get; set; }
+
+        
     }
 }

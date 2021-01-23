@@ -1,9 +1,4 @@
-﻿using GiftsDal;
-using GiftsEntity;
-using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Web.Services;
+﻿using System;
 using System.Web.UI;
 
 
@@ -15,15 +10,6 @@ namespace GiftsSite
         {
           
         }
-
-        
-        //[WebMethod(EnableSession = true)]
-        //public List<Product> GetProductsData()
-        //{
-        //    string conString = ConfigurationManager.ConnectionStrings["GiftsDB"].ConnectionString;
-        //    ProductsDal dal = new ProductsDal(conString);
-        //    List<Product> productsLst = dal.GetProductsList(1, 2);
-        //    return productsLst;
-        //}
+       
     }
 }
